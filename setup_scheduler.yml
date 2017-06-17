@@ -23,3 +23,9 @@
         minute: 15
         hour: 4
         job: "sudo python /home/ubuntu/start_stop/stop_instances.py"
+    - cron:
+        name: "publish results"
+        minute: 15
+        hour: 4
+        job: "sudo python /home/ubuntu/start_stop/publish_results.py"
+
