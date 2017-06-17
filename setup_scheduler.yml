@@ -1,0 +1,25 @@
+---
+# this is to setup a single box that will start/stop the ping instances
+# to save money on GCP costs
+- hosts: default
+  remote_user: benny
+  sudo: True
+  tasks:
+    - synchronize:
+        src: start_stop/
+        dest: /home/ubuntu/start_stop
+    - apt:
+        name: python-pip
+        state: present
+    - pip:
+        requirements: /home/ubuntu/start_stop/requirements.txt
+    - cron:
+        name: "start ping instsances"
+        minute: 5
+        hour: 4
+        job: "sudo python /home/ubuntu/start_stop/start_instances.py"
+    - cron:
+        name: "stop ping instsances"
+        minute: 15
+        hour: 4
+        job: "sudo python /home/ubuntu/start_stop/stop_instances.py"

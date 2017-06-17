@@ -1,0 +1,17 @@
+---
+# this is the setup for the hosts that ping each other
+- hosts: default
+  remote_user: benny
+  sudo: True
+  tasks:
+    - synchronize:
+        src: ping/
+        dest: /home/benny/ping/
+    - apt:
+        name: python-pip
+        state: present
+    - pip:
+        requirements: /home/benny/ping/requirements.txt
+    - cron:
+        name: "ping latency"
+        job: "sudo python /home/benny/ping/ping.py"
