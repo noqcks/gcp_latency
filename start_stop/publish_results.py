@@ -3,6 +3,7 @@ import json
 import time
 import googleapiclient.discovery
 import http
+import os
 from StringIO import StringIO
 
 
@@ -16,8 +17,8 @@ from StringIO import StringIO
 #    }
 # }
 
-REGIONS = ['us-east1', 'us-west1', 'asia-east-1', 'asia-northeast1', 'asia-southest1', 'europe-west1', 'europe-west2', 'us-central1', 'us-east4']
-r = redis.StrictRedis(host='redis-10800.c1.us-east1-2.gce.cloud.redislabs.com', port=10800, db=0)
+REGIONS = ['us-east1', 'us-west1', 'asiaeast--1', 'asia-northeast1', 'asia-southest1', 'europe-west1', 'europe-west2', 'us-central1', 'us-east4']
+r = redis.StrictRedis(host=os.environ['REDIS_HOST'], port=os.environ['REDIS_PORT'], db=0)
 
 def main():
   data = {}

@@ -3,6 +3,7 @@
 - hosts: default
   remote_user: benny
   sudo: True
+  vars_files: vault.yml
   tasks:
     - synchronize:
         src: ping/
@@ -12,6 +13,10 @@
         state: present
     - pip:
         requirements: /home/benny/ping/requirements.txt
+    - environment:
+        REDIS_HOST: "{{ redis_host }}"
+    - environment:
+        REDIS_PORT: "{{ redis_port }}"
     - cron:
         name: "ping latency"
         job: "sudo python /home/benny/ping/ping.py"

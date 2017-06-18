@@ -1,6 +1,7 @@
 import pyping
 import numpy as np
 import redis
+import os
 from urllib2 import Request,urlopen
 
 # global constants
@@ -9,7 +10,7 @@ INTERNAL_ENDPOINTS = {}
 METADATA_ENDPOINT = 'http://metadata.google.internal/computeMetadata/v1/instance/zone'
 
 
-r = redis.StrictRedis(host='redis-10800.c1.us-east1-2.gce.cloud.redislabs.com', port=10800, db=0)
+r = redis.StrictRedis(host=os.environ['REDIS_HOST'], port=os.environ['REDIS_PORT'], db=0)
 
 
 # ping a region X times and region a latency average.

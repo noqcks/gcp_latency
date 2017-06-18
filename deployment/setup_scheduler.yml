@@ -4,6 +4,7 @@
 - hosts: default
   remote_user: benny
   sudo: True
+  vars_files: vault.yml
   tasks:
     - synchronize:
         src: start_stop/
@@ -11,6 +12,10 @@
     - apt:
         name: python-pip
         state: present
+    - environment:
+        REDIS_HOST: "{{ redis_host }}"
+    - environment:
+        REDIS_PORT: "{{ redis_port }}"
     - pip:
         requirements: /home/ubuntu/start_stop/requirements.txt
     - cron:
