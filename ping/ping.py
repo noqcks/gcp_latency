@@ -16,7 +16,7 @@ r = redis.StrictRedis(host='redis-10800.c1.us-east1-2.gce.cloud.redislabs.com', 
 def ping_region(endpoint, times=10, timeout=2, psize=64):
   latency = []
   for _ in range(times):
-    latency.append(pyping.do_one(endpoint, timeout, psize)*1000)
+    latency.append(np.round(pyping.do_one(endpoint, timeout, psize)*1000), 2)
   return np.mean(latency)
 
 # return the current region that the instance is

@@ -39,7 +39,7 @@ def upload_to_google_storage(data):
     body={"cacheControl": "public,max-age=31536000"},
     media_body=media,
     predefinedAcl='publicRead',
-    name='latency_results',
+    name='latency_results.json',
   )
   resp = req.execute()
 
