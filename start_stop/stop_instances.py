@@ -3,7 +3,7 @@ import googleapiclient.discovery
 compute = googleapiclient.discovery.build('compute', 'v1')
 
 compute.instances().stop(project='noqcks', instance='us-east-1-ping', zone='us-east1-c').execute()
-compute.instances().stop(project='noqcks', instance='asia-east1', zone='asia-east1-b').execute()
+compute.instances().stop(project='noqcks', instance='asia-east1-ping', zone='asia-east1-a').execute()
 compute.instances().stop(project='noqcks', instance='asia-northeast1-ping', zone='asia-northeast1-a').execute()
 compute.instances().stop(project='noqcks', instance='asia-southeast1-ping', zone='asia-southeast1-a').execute()
 compute.instances().stop(project='noqcks', instance='europe-west1-ping', zone='europe-west1-d').execute()

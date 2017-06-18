@@ -4,33 +4,36 @@
 - hosts: default
   remote_user: benny
   sudo: True
-  vars_files: vault.yml
+  vars_files:
+    - vault.yml
+  roles:
+    - franklinkim.environment
+  vars:
+    environment_config:
+      REDIS_HOST: "{{ redis_host}}"
+      REDIS_PORT: "{{ redis_port }}"
   tasks:
     - synchronize:
-        src: start_stop/
-        dest: /home/ubuntu/start_stop
+        src: ../start_stop/
+        dest: /home/benny/start_stop
     - apt:
         name: python-pip
         state: present
-    - environment:
-        REDIS_HOST: "{{ redis_host }}"
-    - environment:
-        REDIS_PORT: "{{ redis_port }}"
     - pip:
-        requirements: /home/ubuntu/start_stop/requirements.txt
+        requirements: /home/benny/start_stop/requirements.txt
     - cron:
         name: "start ping instsances"
         minute: 5
         hour: 4
-        job: "sudo python /home/ubuntu/start_stop/start_instances.py"
+        job: "sudo python /home/benny/start_stop/start_instances.py"
     - cron:
         name: "stop ping instsances"
         minute: 15
         hour: 4
-        job: "sudo python /home/ubuntu/start_stop/stop_instances.py"
+        job: "sudo python /home/benny/start_stop/stop_instances.py"
     - cron:
         name: "publish results"
         minute: 15
         hour: 4
-        job: "sudo python /home/ubuntu/start_stop/publish_results.py"
+        job: "sudo python /home/benny/start_stop/publish_results.py"
 

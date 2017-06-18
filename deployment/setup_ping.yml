@@ -3,20 +3,23 @@
 - hosts: default
   remote_user: benny
   sudo: True
-  vars_files: vault.yml
+  vars_files:
+    - vault.yml
+  roles:
+    - franklinkim.environment
+  vars:
+    environment_config:
+      REDIS_HOST: "{{ redis_host}}"
+      REDIS_PORT: "{{ redis_port }}"
   tasks:
     - synchronize:
-        src: ping/
+        src: ../ping/
         dest: /home/benny/ping/
     - apt:
         name: python-pip
         state: present
     - pip:
         requirements: /home/benny/ping/requirements.txt
-    - environment:
-        REDIS_HOST: "{{ redis_host }}"
-    - environment:
-        REDIS_PORT: "{{ redis_port }}"
     - cron:
         name: "ping latency"
         job: "sudo python /home/benny/ping/ping.py"
