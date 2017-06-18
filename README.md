@@ -9,12 +9,14 @@ There are f1 instances in each GCP region that are pinged 10 times every 24 hour
 
 The average latency is recorded to 2 decimal places.
 
-# LICENSE
+# License
 
 MIT
 
-# AUthor
+# Author
 
 benny@noqcks.io
+
 www.noqcks.io
+
 https://twitter.com/noqcks
