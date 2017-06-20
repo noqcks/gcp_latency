@@ -1,2 +1,4 @@
 redis==2.10.5
 google-api-python-client==1.6.2
+numpy==1.13.0
+pandas==0.19.2
