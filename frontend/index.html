@@ -2,46 +2,75 @@
 <html>
   <head>
     <script src="papaparse.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="default.css">
   </head>
   <body>
-  <div id="tablePrint"> </div>
+    <div id='app'>
+    <header><h1>Google Cloud Inter-Region Latency</h1></header>
+    <div class='note'>
+      <p><em>The data is collected 10 times every 24 hours and then averaged.</em></p>
+    </div>
+    <div id="tablePrint"> </div>
+    <div id='color-legend'>
+      <span>Latency:</span>
+      <span class='green'> <100ms</span>
+      <span class='yellow'> 100-180ms</span>
+      <span class='red'> >180ms</span>
+      <br>
+      <em>All times are in milliseconds.</em>
+    </div>
+    <div class='info'>
+      <h1># About </h1>
+      <ul>
+        <li>A huge thank you to <a href="https://twitter.com/mda590">matt</a> for the inspiration with his <a href="https://www.cloudping.co/">AWS Inter-Region Latency</a> site.</li>
+        <li>github: <a href="https://github.com/noqcks/gcp_latency">https://github.com/noqcks/gcp_latency</a></li>
+        <li>contact me: <a href="https://twitter.com/noqcks">twitter</a> | <a href="https://github.com/noqcks">github</a> | <a href="https://www.linkedin.com/in/bennyvisser/">linkedin</a> </li>
+      </ul>
+    </div>
 
-  <script language="javascript" type="text/javascript">
-
-  var results = Papa.parse('https://storage.googleapis.com/gcp-latency/latency_results.csv', {
-    download: true,
-    header: true,
-    skipEmptyLines: true,
-    complete: function(results) {
-      var myTable= "<table><tr><th><table><tr><td>Source Region</td></tr><tr><td>Destination Region</td></tr></table></th>";
-      myTable+= "<th style='width: 100px; color: red;'>asia-east1</th>";
-      myTable+= "<th style='width: 100px; color: red; text-align: right;'>asia-northest1</th>";
-      myTable+="<th style='width: 100px; color: red; text-align: right;'>asia-southeast1</th>";
-      myTable+="<th style='width: 100px; color: red; text-align: right;'>europe-west1</th>";
-      myTable+="<th style='width: 100px; color: red; text-align: right;'>europe-west2</th>";
-      myTable+="<th style='width: 100px; color: red; text-align: right;'>us-central1</th>";
-      myTable+="<th style='width: 100px; color: red; text-align: right;'>us-east1</th>";
-      myTable+="<th style='width: 100px; color: red; text-align: right;'>us-east4</th>";
-      myTable+="<th style='width: 100px; color: red; text-align: right;'>us-west1</th></tr>";
-      for (let s of results.data) {
-        // TODO: color based on latency
-        myTable+="<tr><td style='width: 100px;'>" + s.region + "</td>";
-        myTable+="<td style='width: 100px; text-align: right;'>" + s['asia-east1']+ "</td>";
-        myTable+="<td style='width: 100px; text-align: right;'>" + s['asia-northeast1']+ "</td>";
-        myTable+="<td style='width: 100px; text-align: right;'>" + s['asia-southeast1']+ "</td>";
-        myTable+="<td style='width: 100px; text-align: right;'>" + s['europe-west1']+ "</td>";
-        myTable+="<td style='width: 100px; text-align: right;'>" + s['europe-west2']+ "</td>";
-        myTable+="<td style='width: 100px; text-align: right;'>" + s['us-central1']+ "</td>";
-        myTable+="<td style='width: 100px; text-align: right;'>" + s['us-east1']+ "</td>";
-        myTable+="<td style='width: 100px; text-align: right;'>" + s['us-east4']+ "</td>";
-        myTable+="<td style='width: 100px; text-align: right;'>" + s['us-west1']+ "</td>";
+    <script language="javascript" type="text/javascript">
+      function what_color(number) {
+        if (number < 100.00) {
+          color = 'green';
+        } else if (number > 180.00){
+          color = 'red';
+        } else {
+          color = 'yellow';
+        }
+        return color
       }
-      myTable+="</table>";
-      document.getElementById('tablePrint').innerHTML = myTable;
-    }
-  });
-</script>
+    </script>
+    <script language="javascript" type="text/javascript">
+
+      var results = Papa.parse('https://storage.googleapis.com/gcp-latency/latencies.csv', {
+        download: true,
+        header: true,
+        skipEmptyLines: true,
+        complete: function(results) {
+          var myTable= "<table><tr><th><table><tr><td class='destination-region'>Destination Region</td></tr><tr><td class='source-region'>Source Region</td></tr></table></th>";
+
+          for (let s of results.data) {
+            myTable+="<th class='destination-region'>" + s['region'] + "</th>";
+          }
+          for (let s of results.data) {
+            Object.keys(s).forEach(function(key) {
+              if (key === "region") {
+                myTable+="<tr><th class='source-region'>" + s['region'] + "</th>";
+              } else {
+                if (s[key] == '0.0') {
+                  myTable+="<td style='background-color: rgb(0, 0, 0);'></td>";
+                } else {
+                  myTable+="<td><span class='" + what_color(s[key]) +"'></span><span class='latency'>" + s[key] + "</span></td>";
+                }
+              }
+            })
+          }
+          myTable+="</table>";
+          document.getElementById('tablePrint').innerHTML = myTable;
+        }
+      });
+    </script>
+    </div>
   </body>
 
 </html>
