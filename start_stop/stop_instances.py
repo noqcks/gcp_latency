@@ -10,6 +10,6 @@ compute.instances().stop(project='noqcks', instance='europe-west1-ping', zone='e
 compute.instances().stop(project='noqcks', instance='europe-west2-ping', zone='europe-west2-b').execute()
 compute.instances().stop(project='noqcks', instance='us-central1-ping', zone='us-central1-c').execute()
 compute.instances().stop(project='noqcks', instance='us-east4-a', zone='us-east4-a').execute()
-compute.instances().stop(project='noqcks', instance='us-west-1-ping', zone='us-west1-c').execute()
+compute.instances().stop(project='noqcks', instance='us-west-1', zone='us-west1-b').execute()
 
 print "stopped instances"
