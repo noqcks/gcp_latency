@@ -9,7 +9,7 @@ import numpy as np
 from StringIO import StringIO
 
 
-REGIONS = ['us-east1', 'us-west1', 'asia-east1', 'asia-northeast1', 'asia-southeast1', 'europe-west1', 'europe-west2', 'us-central1', 'us-east4']
+REGIONS = ['us-east1', 'us-west1', 'asia-east1', 'asia-northeast1', 'asia-southeast1', 'europe-west1', 'europe-west2', 'us-central1', 'us-east4', 'asia-south1', 'europe-west3', 'australia-southeast1', 'southamerica-east1']
 r = redis.StrictRedis(host=os.environ['REDIS_HOST'], port=os.environ['REDIS_PORT'], db=0)
 
 def main():
