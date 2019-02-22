@@ -1,3 +1,5 @@
+[DEPRECATED]: The site has been deprecated because I don't want to pay to run it anymore. But the code should still work. 
+
 # GCP Latency
 
 This records the inter-region latency between all the available Google Cloud Regions
